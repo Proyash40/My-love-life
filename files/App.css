@@ -1,0 +1,240 @@
+/* HITL Drone Simulator — Dashboard styling
+   Palette: deep instrument-panel navy, amber primary signal, teal secondary.
+   Numerals use a monospace face — a deliberate choice matching real flight
+   telemetry readouts, not a generic "data label" default. */
+
+:root {
+  --bg-deep: #0a1420;
+  --bg-panel: #101d30;
+  --bg-panel-raised: #142339;
+  --line-dim: #21384f;
+  --line-bright: #345a78;
+  --amber: #ffb020;
+  --teal: #4fd1c5;
+  --text-primary: #e7eef5;
+  --text-dim: #6f88a1;
+  --danger: #ff5c5c;
+  --font-sans: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-deep);
+}
+
+.dashboard {
+  min-height: 100vh;
+  padding: 28px 24px 40px;
+  background: radial-gradient(circle at 50% -10%, #142339 0%, #0a1420 60%);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+}
+
+.dashboard__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 720px;
+  margin: 0 auto 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line-dim);
+}
+
+.dashboard__title {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dashboard__title-main {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-primary);
+}
+
+.dashboard__title-sub {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.status-pill {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  padding: 5px 10px;
+  border-radius: 3px;
+  border: 1px solid var(--line-bright);
+  color: var(--text-dim);
+}
+
+.status-pill--connected {
+  color: var(--teal);
+  border-color: var(--teal);
+}
+
+.status-pill--connecting {
+  color: var(--amber);
+  border-color: var(--amber);
+}
+
+.status-pill--disconnected,
+.status-pill--error {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.dashboard__body {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.stick-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.stick-box {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  background: var(--bg-panel);
+  border: 1px solid var(--line-dim);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.stick-box__crosshair {
+  position: absolute;
+  background: var(--line-dim);
+}
+
+.stick-box__crosshair--h {
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  transform: translateY(-50%);
+}
+
+.stick-box__crosshair--v {
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  transform: translateX(-50%);
+}
+
+.stick-box__corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--line-bright);
+}
+
+.stick-box__corner--tl {
+  top: 6px;
+  left: 6px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.stick-box__corner--tr {
+  top: 6px;
+  right: 6px;
+  border-left: none;
+  border-bottom: none;
+}
+
+.stick-box__corner--bl {
+  bottom: 6px;
+  left: 6px;
+  border-right: none;
+  border-top: none;
+}
+
+.stick-box__corner--br {
+  bottom: 6px;
+  right: 6px;
+  border-left: none;
+  border-top: none;
+}
+
+.stick-knob {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ffd580, var(--amber));
+  box-shadow: 0 0 14px rgba(255, 176, 32, 0.55);
+  /* transform is set imperatively from App.jsx on every telemetry frame */
+  transform: translate(0px, 0px);
+  transition: none; /* no CSS transition — real telemetry shouldn't lag behind reality */
+}
+
+.stick-panel__label {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+}
+
+.stick-panel__axes {
+  display: flex;
+  gap: 14px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--line-bright);
+}
+
+.readout {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 20px;
+  background: var(--bg-panel-raised);
+  border: 1px solid var(--line-dim);
+  border-radius: 6px;
+  min-width: 120px;
+}
+
+.readout__item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: var(--font-mono);
+}
+
+.readout__key {
+  color: var(--text-dim);
+  font-size: 12px;
+}
+
+.readout__val {
+  color: var(--teal);
+  font-size: 16px;
+  font-weight: 600;
+  min-width: 3ch;
+  text-align: right;
+}
+
+@media (max-width: 520px) {
+  .stick-box {
+    width: 170px;
+    height: 170px;
+  }
+}
